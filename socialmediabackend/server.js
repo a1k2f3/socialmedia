@@ -19,7 +19,7 @@ app.use("/api", Login);
 app.use("/api", post);
 app.use("/api", find_user);
 app.use("/api",Comments)
-// app.use("/api",find_post)
+app.use("/api",find_post)
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
