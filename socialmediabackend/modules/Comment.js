@@ -27,10 +27,9 @@ router.post('/post/comment/:postid', async (req, res) => {
         const newComment = {
             author_id, // directly use author_id from the request body
             content,
-            title,
+            title: title,
             createdAt: new Date(),
         };
-
         // Push the new comment to the post's comments array
         post.comments.push(newComment);
 
