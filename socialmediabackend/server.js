@@ -7,6 +7,7 @@ import Comments from "./modules/Comment.js"
 import find_user from "./modules/finduser.js"
 import find_post from "./modules/getPost.js"
 import fetchcomment from "./modules/fetchcomment.js"
+import suggestion from "./modules/suggest.js"
 import cors from'cors'
 const app = express();
 app.use(express.json()); 
@@ -19,6 +20,7 @@ app.use("/api", authRoutes);
 app.use("/api", Login);
 app.use("/api", post);
 app.use("/api", find_user);
+app.use("/api", suggestion);
 app.use("/api",Comments)
 app.use("/api",find_post)
 app.use("/api",fetchcomment)
