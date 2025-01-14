@@ -12,9 +12,10 @@ const __dirname = path.dirname(__filename);
 // Serve static files from the "public" directory
 router.use("/public", express.static(path.join(__dirname, "../../public"))); // Adjust path as per your project structure
 
-router.get("/user", async (req, res) => {
+router.post("/user", async (req, res) => {
   try {
-    const user = await Accounts.find();
+    const {username}=req.body;
+    const user = await Accounts.find({username:{ $regex: username, $options: "i" }});
     res.json(user);
   } catch (error) {
     console.log(error); // Log the error for debugging
