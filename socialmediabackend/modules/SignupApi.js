@@ -6,7 +6,9 @@ import multer from "multer";
 import path from "path";
 import fs from 'fs'
 import nodemailer from 'nodemailer';
+import { Server } from "socket.io";
 const router = express.Router();
+const io = new Server(httpServer,{ /* options */ });
 router.use(express.static( 'public'));
 const imagesDir = path.join('public', 'images');
 if (!fs.existsSync(imagesDir)) {
@@ -21,8 +23,11 @@ const storage=multer.diskStorage({
   }
 )
 const upload=multer({storage:storage})
-router.post("/signup", upload.single('image'),validateSignup,async (req, res) => {
+io.on("connection",(socket)=>{
   
+})
+router.post("/signup", upload.single('image'),validateSignup,async (req, res) => {
+
   try {
     const { username, email, phone, date_of_birth, password, country,Userbio } = req.body;
     const file=req.file
