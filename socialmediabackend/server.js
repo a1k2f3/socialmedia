@@ -40,7 +40,7 @@ app.use("/api",postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/users", findUserRoutes);
 app.use("/api/suggestions", suggestionRoutes);
-app.use("/api/findpost", findPostRoutes);
+app.use("/api", findPostRoutes);
 app.use("/api/fetchcomments", fetchCommentRoutes);
 io.on("connection", (socket) => {
   console.log("User connected");
