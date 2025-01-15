@@ -15,7 +15,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const httpServer = createServer(app);
 // Socket.io server setup with CORS for front-end origin
-const io = new Server(httpServer, { 
+const io = new Server(httpServer,{ 
   cors: {
     origin: "http://localhost:3000", // Change this to your front-end URL
     methods: ["GET", "POST"]
@@ -36,7 +36,14 @@ app.get("/", (req, res) => {
 
 // API routes
 app.use("/api/auth", authRoutes(httpServer));
-app.use("/api/login", loginRoutes);
+app.use("/api/login", loginRoutes(io));
+io.on("connection",(socket)=>{
+  console.log("user connected");
+socket.on("connection",(socket)=>{
+  console.log("User disconnected");
+
+})
+})
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/users", findUserRoutes);

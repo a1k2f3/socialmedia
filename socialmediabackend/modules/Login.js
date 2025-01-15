@@ -2,18 +2,14 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import Accounts from "../Schema/Signup.js"; // Verify this path
 import jwt from "jsonwebtoken";
-import { Socket } from "socket.io";
-
 const router = express.Router();
-
+export default(io)=>{
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required." });
     }
-
     const existingUser = await Accounts.findOne({ email });
     if (!existingUser) {
       return res.status(400).send("Invalid email or password");
@@ -32,10 +28,12 @@ router.post("/login", async (req, res) => {
     );
 
     res.status(200).json({ message: "User login successful",  user: existingUser, token, id:existingUser.id});
+    io.emit("user logeind",{id:existingUser.id, email:existingUser.email})
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
+return router;
+}
 
-export default router;
