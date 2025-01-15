@@ -26,7 +26,6 @@ router.post("/login", async (req, res) => {
       process.env.JWT_SECRET || "your_jwt_secret", // Replace with your secret
       { expiresIn: '1h' } // Adjust the expiration time to something reasonable like 1 hour
     );
-
     res.status(200).json({ message: "User login successful",  user: existingUser, token, id:existingUser.id});
     io.emit("user logeind",{id:existingUser.id, email:existingUser.email})
   } catch (error) {

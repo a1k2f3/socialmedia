@@ -58,8 +58,7 @@ router.post("/signup", upload.single('image'),validateSignup,async (req, res) =>
       Userbio
     });
     io.emit("user signup",{emai:email, name:username})
-  }
-    
+  }  
      catch (error) {
     console.error("Error creating user:", error);
     res.status(500).json({ message: "Server error" });

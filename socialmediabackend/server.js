@@ -21,46 +21,33 @@ const io = new Server(httpServer,{
     methods: ["GET", "POST"]
   }
 });
-
-// Middleware
 app.use(express.json());
 app.use(cors());
-
-// Connect to MongoDB
 connectDB();
-
 // Test route
 app.get("/", (req, res) => {
   res.send("Server is running!");
 });
-
-// API routes
-app.use("/api/auth", authRoutes(httpServer));
-app.use("/api/login", loginRoutes(io));
+app.use("/api", authRoutes(httpServer));
+app.use("/api", loginRoutes(io));
 io.on("connection",(socket)=>{
   console.log("user connected");
 socket.on("connection",(socket)=>{
   console.log("User disconnected");
-
 })
 })
-app.use("/api/posts", postRoutes);
+app.use("/api",postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/users", findUserRoutes);
 app.use("/api/suggestions", suggestionRoutes);
 app.use("/api/findpost", findPostRoutes);
 app.use("/api/fetchcomments", fetchCommentRoutes);
-
-// Socket.io event handling
 io.on("connection", (socket) => {
   console.log("User connected");
-
   socket.on("disconnect", () => {
     console.log("User disconnected");
   });
 });
-
-// Start the server
 httpServer.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
