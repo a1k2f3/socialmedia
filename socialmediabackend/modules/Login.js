@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import Accounts from "../Schema/Signup.js"; // Verify this path
 import jwt from "jsonwebtoken";
+import { Socket } from "socket.io";
 
 const router = express.Router();
 

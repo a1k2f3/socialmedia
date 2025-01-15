@@ -8,7 +8,6 @@ import fs from 'fs'
 import nodemailer from 'nodemailer';
 import { Server } from "socket.io";
 const router = express.Router();
-const io = new Server(httpServer,{ /* options */ });
 router.use(express.static( 'public'));
 const imagesDir = path.join('public', 'images');
 if (!fs.existsSync(imagesDir)) {
@@ -22,10 +21,17 @@ const storage=multer.diskStorage({
   }
   }
 )
-const upload=multer({storage:storage})
-io.on("connection",(socket)=>{
-  
-})
+export default(httpServer)=>{
+  const io = new Server(httpServer, { /* options */ });
+
+  io.on("connection", (socket) => {
+    console.log("User connected to Signup API");
+
+    socket.on("disconnect", () => {
+      console.log("User disconnected from Signup API");
+    });
+  });
+  const upload=multer({storage:storage})
 router.post("/signup", upload.single('image'),validateSignup,async (req, res) => {
 
   try {
@@ -40,7 +46,7 @@ router.post("/signup", upload.single('image'),validateSignup,async (req, res) =>
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
+    
     await Accounts.create({
       username,
       email,
@@ -56,4 +62,5 @@ router.post("/signup", upload.single('image'),validateSignup,async (req, res) =>
     res.status(500).json({ message: "Server error" });
   }
 });
-export default router;
+return router;
+}
