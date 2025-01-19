@@ -4,6 +4,11 @@ import Accounts from "../Schema/Signup.js"; // Verify this path
 import jwt from "jsonwebtoken";
 const router = express.Router();
 export default(io)=>{
+
+io.on("connection", (socket) => {
+  console.log("Client connected");
+  socket.on("disconnect", () => console.log("Client disconnected"));
+});
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
