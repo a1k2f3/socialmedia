@@ -21,7 +21,7 @@ const io = new Server(httpServer,{
     methods: ["GET", "POST"]
   }
 });
-app.use(express.json());
+app.use(express.json({origin:'http://localhost:3000'}));
 app.use(cors());
 connectDB();
 // Test route
@@ -30,18 +30,12 @@ app.get("/", (req, res) => {
 });
 app.use("/api", authRoutes(httpServer));
 app.use("/api", loginRoutes(io));
-io.on("connection",(socket)=>{
-  console.log("user connected");
-socket.on("connection",(socket)=>{
-  console.log("User disconnected");
-})
-})
 app.use("/api",postRoutes);
-app.use("/api/comments", commentRoutes);
-app.use("/api/users", findUserRoutes);
-app.use("/api/suggestions", suggestionRoutes);
+app.use("/api", commentRoutes);
+app.use("/api", findUserRoutes);
+app.use("/api", suggestionRoutes);
 app.use("/api", findPostRoutes);
-app.use("/api/fetchcomments", fetchCommentRoutes);
+app.use("/api", fetchCommentRoutes);
 io.on("connection", (socket) => {
   console.log("User connected");
   socket.on("disconnect", () => {
