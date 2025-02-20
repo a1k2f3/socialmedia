@@ -7,6 +7,7 @@ import commentRoutes from "./modules/Comment.js";
 import findUserRoutes from "./modules/finduser.js";
 import findPostRoutes from "./modules/getPost.js";
 import fetchCommentRoutes from "./modules/fetchcomment.js";
+import search from "./modules/searchdata.js";
 import suggestionRoutes from "./modules/suggest.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -36,6 +37,7 @@ app.use("/api", findUserRoutes);
 app.use("/api", suggestionRoutes);
 app.use("/api", findPostRoutes);
 app.use("/api", fetchCommentRoutes);
+app.use("/api", search);
 io.on("connection", (socket) => {
   console.log("User connected");
   socket.on("disconnect", () => {
