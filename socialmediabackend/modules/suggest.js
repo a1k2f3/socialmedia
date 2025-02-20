@@ -17,7 +17,6 @@ router.get('/user', async (req, res) => {
     if (!query) {
       return res.status(400).json({ error: "Query is required" });
     }
-  
     try {
       const users = await Accounts.find({ username: { $regex: query, $options: "i" } }); // Case-insensitive search
       const usernames = users.map((user) => user.username); // Extract usernames

@@ -18,7 +18,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer,{ 
   cors: {
     origin: "http://localhost:3000", // Change this to your front-end URL
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST","PUT"]
   }
 });
 app.use(express.json({origin:'http://localhost:3000'}));
