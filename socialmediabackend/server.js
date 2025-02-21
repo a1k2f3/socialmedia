@@ -11,6 +11,7 @@ import search from "./modules/searchdata.js";
 import suggestionRoutes from "./modules/suggest.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import acounts from "./modules/Alluser.js"
 import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,13 +32,14 @@ app.get("/", (req, res) => {
   res.send("Server is running!");
 });
 app.use("/api", authRoutes(httpServer));
-app.use("/api", loginRoutes(io));
+app.use("/api", loginRoutes(io),express.static('public/images'));
 app.use("/api",postRoutes,express.static('public/media'));
 app.use("/api", commentRoutes);
 app.use("/api", findUserRoutes);
 app.use("/api", suggestionRoutes);
 app.use("/api", findPostRoutes,express.static('public/media'));
 app.use("/api", fetchCommentRoutes);
+app.use("/api", acounts);
 app.use("/api", search);
 io.on("connection", (socket) => {
   console.log("User connected");
