@@ -15,6 +15,7 @@ import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 3000;
 const httpServer = createServer(app);
+app.use(express.static("public"))
 // Socket.io server setup with CORS for front-end origin
 const io = new Server(httpServer,{ 
   cors: {
@@ -35,7 +36,7 @@ app.use("/api",postRoutes,express.static('public/media'));
 app.use("/api", commentRoutes);
 app.use("/api", findUserRoutes);
 app.use("/api", suggestionRoutes);
-app.use("/api", findPostRoutes);
+app.use("/api", findPostRoutes,express.static('public/media'));
 app.use("/api", fetchCommentRoutes);
 app.use("/api", search);
 io.on("connection", (socket) => {
