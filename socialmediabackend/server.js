@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api", authRoutes(httpServer));
 app.use("/api", loginRoutes(io));
-app.use("/api",postRoutes);
+app.use("/api",postRoutes,express.static('public/media'));
 app.use("/api", commentRoutes);
 app.use("/api", findUserRoutes);
 app.use("/api", suggestionRoutes);
