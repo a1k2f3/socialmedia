@@ -10,12 +10,11 @@ router.get('/search', async (req, res) => {
     if (!author_id) {
       return res.status(400).json({ message: "Content, author ID, and post ID are required" });
     }
-    await Search.find({
+    const search=await Search.find({
         author_id        
     })
     res.status(201).json({
-      message: 'search successfully',
-       // Returning the new comment
+      message: search,
     });
   } catch (error) {
     console.error(error);
