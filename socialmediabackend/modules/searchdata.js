@@ -4,16 +4,14 @@ import Search from '../Schema/searchdata.js';
 const router = express.Router();
 router.use(express.json());
 router.use(cors()); // Apply CORS globally (better in app.js or server.js)
-
-router.post('/search', async (req, res) => {
+router.get('/search', async (req, res) => {
   try {
-    const { author_id, username } = req.body; 
-    if (!author_id||!username) {
+    const { author_id} = req.body; 
+    if (!author_id) {
       return res.status(400).json({ message: "Content, author ID, and post ID are required" });
     }
-    await Search.create({
-        author_id,
-        username,
+    await Search.find({
+        author_id        
     })
     res.status(201).json({
       message: 'search successfully',
@@ -24,5 +22,4 @@ router.post('/search', async (req, res) => {
     res.status(500).json({ message: 'Failed to add search', error });
   }
 });
-
 export default router;

@@ -8,6 +8,7 @@ import findUserRoutes from "./modules/finduser.js";
 import findPostRoutes from "./modules/getPost.js";
 import fetchCommentRoutes from "./modules/fetchcomment.js";
 import suggestionRoutes from "./modules/suggest.js";
+import searchhistory from "./modules/searchdata.js"
 import { createServer } from "http";
 import { Server } from "socket.io";
 import acounts from "./modules/Alluser.js"
@@ -39,6 +40,7 @@ app.use("/api", suggestionRoutes);
 app.use("/api", findPostRoutes,express.static('public/media'));
 app.use("/api", fetchCommentRoutes);
 app.use("/api", acounts);
+app.use("/api", searchhistory);
 io.on("connection", (socket) => {
   console.log("User connected");
   socket.on("disconnect", () => {
