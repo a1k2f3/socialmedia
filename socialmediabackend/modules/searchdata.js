@@ -6,7 +6,7 @@ router.use(express.json());
 router.use(cors()); // Apply CORS globally (better in app.js or server.js)
 router.get('/search', async (req, res) => {
   try {
-    const { author_id} = req.body; 
+    const { author_id} = req.query; 
     if (!author_id) {
       return res.status(400).json({ message: "Content, author ID, and post ID are required" });
     }
